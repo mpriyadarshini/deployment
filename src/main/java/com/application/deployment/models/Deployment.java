@@ -1,9 +1,6 @@
 package com.application.deployment.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
@@ -13,13 +10,16 @@ public class Deployment {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne(optional = false)
+    private final App app;
     private final String revision;
     private final String changelog;
     private final String description;
     private final String user;
     private final Date createdAt;
 
-    public Deployment(String revision, String changelog, String description, String user, Date createdAt) {
+    public Deployment(App app, String revision, String changelog, String description, String user, Date createdAt) {
+        this.app = app;
         this.revision = revision;
         this.changelog = changelog;
         this.description = description;
@@ -49,5 +49,9 @@ public class Deployment {
 
     public Long getId() {
         return id;
+    }
+
+    public App getApp() {
+        return app;
     }
 }

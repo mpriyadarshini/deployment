@@ -1,5 +1,5 @@
 create table app (
-    id bigint not null primary key,
+    id serial not null primary key,
     name varchar(255) not null,
     description varchar,
     url varchar,
@@ -7,8 +7,7 @@ create table app (
 );
 
 create table deployment(
-
-    id bigint not null primary key,
+    id serial not null primary key,
     revision varchar(255) not null,
     changelog varchar ,
     description varchar,

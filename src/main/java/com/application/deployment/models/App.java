@@ -1,28 +1,34 @@
 package com.application.deployment.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.sql.Date;
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 public class App {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String description;
     private String url;
-    private final Date createdAt;
+    private final Timestamp createdAt;
 
-    public App(String name, String description, String url, Date createdAt) {
+    @OneToMany(mappedBy = "app")
+    private final List<Deployment> deployments;
+
+    protected App() {
+        this.createdAt = null;
+        this.deployments = List.of();
+    }
+
+    public App(String name, String description, String url, Timestamp createdAt) {
         this.name = name;
         this.description = description;
         this.url = url;
         this.createdAt = createdAt;
+        this.deployments = List.of();
     }
 
     public String getName() {
@@ -49,11 +55,15 @@ public class App {
         this.url = url;
     }
 
-    public Date getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public List<Deployment> getDeployments() {
+        return deployments;
     }
 }
